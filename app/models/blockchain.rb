@@ -22,7 +22,7 @@ class Blockchain < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20180708171446
+# Schema version: 20180727054453
 #
 # Table name: blockchains
 #

@@ -8,12 +8,6 @@ module Withdraws
       self.rid = CashAddr::Converter.to_legacy_address(rid) if CashAddr::Converter.is_valid?(rid)
     end
 
-    before_validation do
-      next unless currency&.case_insensitive?
-      self.rid  = rid.try(:downcase)
-      self.txid = txid.try(:downcase)
-    end
-
     validate do
       if currency&.supports_cash_addr_format? && rid?
         errors.add(:rid, :invalid) unless CashAddr::Converter.is_valid?(rid)
@@ -21,13 +15,13 @@ module Withdraws
     end
 
     def wallet_url
-      if currency.wallet_url_template?
+      if currency.wallet_url_template.present?
         currency.wallet_url_template.gsub('#{address}', rid)
       end
     end
 
     def transaction_url
-      if txid? && currency.transaction_url_template?
+      if txid? && currency.transaction_url_template.present?
         currency.transaction_url_template.gsub('#{txid}', txid)
       end
     end

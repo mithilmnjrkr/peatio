@@ -71,10 +71,6 @@ module BlockchainClient
         entries:       entries }
     end
 
-    def normalize_address(address)
-      address
-    end
-
   protected
 
     def connection
